@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Arial Rounded MT Bold', Arial, sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #fde2ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app {
+      width: 95vw;
+      height: 95vh;
+      border-radius: 24px;
+      border: 6px solid #f4b6c6;
+      background: #fde2ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .page {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .page.active { display: flex; }
+
+    /* Page 1 */
+    .fade-in {
+      animation: fadeIn 6s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #b54b6b;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      border-radius: 999px;
+      border: 3px solid #000;
+      background: #f28cab;
+      cursor: pointer;
+    }
+
+    button:hover { background: #ea6f98; }
+
+    /* Page 2 */
+    .planner-container {
+      background: #fbd1dd;
+      border: 5px solid #f28cab;
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .selector {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #e0618f;
+      border: 3px solid #000;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .image-box {
+      width: 140px;
+      height: 100px;
+      border-radius: 12px;
+      border: 3px solid #000;
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Page 3 */
+    .countdown {
+      font-size: 1.5rem;
+      color: #7a2c45;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <!-- Page 1 -->
+    <div class="page active" id="page1">
+      <div class="fade-in">
+        <h1>Happy Birthday Jaan!</h1>
+        <h3>... but not yet becasue</h3>
+        <h2>Its Time to Plan Your Cozy Fun Birthday</h2>
+        <button onclick="goToPage(2)">Lets plan</button>
+      </div>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="page" id="page2">
+      <h2>You Birthday Has EIGHTEEN Different Possible Vibes!</h2>
+      <h3>Dont Worry! All Options are Safe!</h3>
+
+      <div class="planner-container">
+        <div class="selector" data-index="0">
+          <h4>What we eating?</h4>
+          <button class="arrow" onclick="prevImage(0)">◀</button>
+          <div class="image-box" id="img0"></div>
+          <button class="arrow" onclick="nextImage(0)">▶</button>
+        </div>
+        <div class="selector" data-index="1">
+          <h4>What we Doing?</h4>
+          <button class="arrow" onclick="prevImage(1)">◀</button>
+          <div class="image-box" id="img1"></div>
+          <button class="arrow" onclick="nextImage(1)">▶</button>
+        </div>
+        <div class="selector" data-index="2">
+          <h4>What we Wearing?</h4>
+          <button class="arrow" onclick="prevImage(2)">◀</button>
+          <div class="image-box" id="img2"></div>
+          <button class="arrow" onclick="nextImage(2)">▶</button>
+        </div>
+        <h5>Take a screenshot of your vibe and send it to me! </h5>
+        <button onclick="goToPage(3)">LOCK IN MY BIG DAY</button>
+      </div>
+    </div>
+
+    <!-- Page 3 -->
+    <div class="page" id="page3">
+      <h1>I Can't WAIT for Your Birthday!</h1>
+      <div class="countdown" id="countdown"></div>
+    </div>
+
+  </div>
+
+  <script>
+    function goToPage(n) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(`page${n}`).classList.add('active');
+    }
+
+    const images = [
+      ["images/burgers.jpeg",
+       "images/golguppay.jpeg",
+       "images/hakka.jpeg"],
+      ["images/activate.jpeg",
+       "images/davenbusters.jpeg",
+       "images/Unknown.jpeg"],
+      ["images/cozy.png",
+       "images/casual.png"]
+    ];
+
+    const indices = [0, 0, 0];
+
+    function updateImages() {
+      indices.forEach((idx, i) => {
+        document.getElementById(`img${i}`).style.backgroundImage = `url(${images[i][idx]})`;
+      });
+    }
+
+    function nextImage(i) {
+      indices[i] = (indices[i] + 1) % images[i].length;
+      updateImages();
+    }
+
+    function prevImage(i) {
+      indices[i] = (indices[i] - 1 + images[i].length) % images[i].length;
+      updateImages();
+    }
+
+    updateImages();
+
+    // Countdown
+    const target = new Date('January 29, 2026 23:59:00').getTime();
+    const countdownEl = document.getElementById('countdown');
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = target - now;
+      if (diff <= 0) {
+        countdownEl.textContent = 'It\'s your birthday! 🎉';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+      countdownEl.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
+    }, 1000);
+  </script>
+</body>
+</html>
