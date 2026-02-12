@@ -1,221 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday</title>
-  <style>
-    * { box-sizing: border-box; font-family: 'Arial Rounded MT Bold', Arial, sans-serif; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Valentine Proposal</title>
+
+<style>
     body {
-      margin: 0;
-      min-height: 100vh;
-      background: #fde2ea;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        margin: 0;
+        font-family: "Arial Rounded MT Bold", Arial, sans-serif;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4, #ffdde1);
+        position: relative;
     }
 
-    .app {
-      width: 95vw;
-      height: 95vh;
-      border-radius: 24px;
-      border: 6px solid #f4b6c6;
-      background: #fde2ea;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+    /* Floating hearts */
+    .heart {
+        position: absolute;
+        font-size: 24px;
+        opacity: 0.15;
+        animation: float 10s linear infinite;
     }
 
-    .page {
-      display: none;
-      width: 100%;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 20px;
+    @keyframes float {
+        from { transform: translateY(100vh) rotate(0deg); }
+        to { transform: translateY(-10vh) rotate(360deg); }
     }
 
-    .page.active { display: flex; }
-
-    /* Page 1 */
-    .fade-in {
-      animation: fadeIn 6s ease forwards;
-      opacity: 0;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    /* Card */
+    .card {
+        position: relative;
+        z-index: 10;
+        width: 90%;
+        max-width: 500px;
+        padding: 30px;
+        text-align: center;
+        background: rgba(255,255,255,0.25);
+        border: 2px solid white;
+        border-radius: 25px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     }
 
     h1 {
-      font-size: 3rem;
-      color: #b54b6b;
-      margin-bottom: 20px;
+        margin-bottom: 15px;
+    }
+
+    img {
+        width: 50%;
+        border-radius: 15px;
+        margin-bottom: 15px;
+    }
+
+    #message {
+        min-height: 50px;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
     }
 
     button {
-      padding: 14px 28px;
-      font-size: 1.1rem;
-      border-radius: 999px;
-      border: 3px solid #000;
-      background: #f28cab;
-      cursor: pointer;
+        flex: 1;
+        padding: 12px;
+        font-size: 18px;
+        border-radius: 15px;
+        border: 2px solid white;
+        background-color: #ff6b81;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.2s;
     }
 
-    button:hover { background: #ea6f98; }
-
-    /* Page 2 */
-    .planner-container {
-      background: #fbd1dd;
-      border: 5px solid #f28cab;
-      border-radius: 20px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      align-items: center;
+    button:hover {
+        transform: scale(1.05);
     }
 
-    .selector {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    #finalPage {
+        position: absolute;
+        inset: 0;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+        color: white;
+        animation: fadeIn 1.5s ease forwards;
+        font-size: 24px;
+        z-index: 20;
     }
 
-    .arrow {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #e0618f;
-      border: 3px solid #000;
-      font-size: 1.2rem;
-      cursor: pointer;
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
-
-    .image-box {
-      width: 140px;
-      height: 100px;
-      border-radius: 12px;
-      border: 3px solid #000;
-      background-size: cover;
-      background-position: center;
-    }
-
-    /* Page 3 */
-    .countdown {
-      font-size: 1.5rem;
-      color: #7a2c45;
-      margin-top: 16px;
-    }
-  </style>
+</style>
 </head>
+
 <body>
-  <div class="app">
 
-    <!-- Page 1 -->
-    <div class="page active" id="page1">
-      <div class="fade-in">
-        <h1>Happy Birthday Jaan!</h1>
-        <h3>... but not yet becasue</h3>
-        <h2>Its Time to Plan Your Cozy Fun Birthday</h2>
-        <button onclick="goToPage(2)">Lets plan</button>
-      </div>
+<!-- Floating hearts -->
+<script>
+for (let i = 0; i < 25; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (6 + Math.random() * 6) + "s";
+    heart.style.fontSize = (16 + Math.random() * 24) + "px";
+    document.body.appendChild(heart);
+}
+</script>
+
+<div class="card" id="card">
+    <h1>Will you be my Valentine?</h1>
+    <!-- CHANGE IMAGE FILE NAME HERE -->
+    <img src="images/CatL.png" alt="Us" />
+    <div id="message"></div>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
     </div>
+</div>
 
-    <!-- Page 2 -->
-    <div class="page" id="page2">
-      <h2>You Birthday Has EIGHTEEN Different Possible Vibes!</h2>
-      <h3>Dont Worry! All Options are Safe!</h3>
+<div id="finalPage">
+    <h1>YAYYYYY ❤️</h1>
+    <p>I love you so much and I can't wait to celebrate together!!</p>
+</div>
 
-      <div class="planner-container">
-        <div class="selector" data-index="0">
-          <h4>What we eating?</h4>
-          <button class="arrow" onclick="prevImage(0)">◀</button>
-          <div class="image-box" id="img0"></div>
-          <button class="arrow" onclick="nextImage(0)">▶</button>
-        </div>
-        <div class="selector" data-index="1">
-          <h4>What we Doing?</h4>
-          <button class="arrow" onclick="prevImage(1)">◀</button>
-          <div class="image-box" id="img1"></div>
-          <button class="arrow" onclick="nextImage(1)">▶</button>
-        </div>
-        <div class="selector" data-index="2">
-          <h4>What we Wearing?</h4>
-          <button class="arrow" onclick="prevImage(2)">◀</button>
-          <div class="image-box" id="img2"></div>
-          <button class="arrow" onclick="nextImage(2)">▶</button>
-        </div>
-        <h5>Take a screenshot of your vibe and send it to me! </h5>
-        <button onclick="goToPage(3)">LOCK IN MY BIG DAY</button>
-      </div>
-    </div>
 
-    <!-- Page 3 -->
-    <div class="page" id="page3">
-      <h1>I Can't WAIT for Your Birthday!</h1>
-      <div class="countdown" id="countdown"></div>
-    </div>
 
-  </div>
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+const card = document.getElementById("card");
+const finalPage = document.getElementById("finalPage");
 
-  <script>
-    function goToPage(n) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(`page${n}`).classList.add('active');
+let noClicks = 0;
+
+function moveNoButton() {
+    const cardRect = card.getBoundingClientRect();
+    let x, y;
+
+    do {
+        x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    } while (
+        x > cardRect.left &&
+        x < cardRect.right &&
+        y > cardRect.top &&
+        y < cardRect.bottom
+    );
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("click", () => {
+    noClicks++;
+
+    if (noClicks === 1) {
+        message.innerText = "It looks like you accidentally clicked No so I moved it out of the way... let's try this again, will you be my valentine?";
+        moveNoButton();
+    } else if (noClicks === 2) {
+        message.innerText = "Finger slipped again? 😂 Happens to the best of us... so we valentining or what?";
+        noBtn.style.display = "none";
     }
+});
 
-    const images = [
-      ["Images/burgers.jpeg",
-       "Images/golguppay.jpeg",
-       "Images/hakka.jpeg"],
-      ["Images/activate.jpeg",
-       "Images/davenbusters.jpeg",
-       "Images/Unknown.jpeg"],
-      ["Images/cozy.png",
-       "Images/casual.png"]
-    ];
+yesBtn.addEventListener("click", () => {
+    card.style.display = "none";
+    finalPage.style.display = "flex";
+});
+</script>
 
-    const indices = [0, 0, 0];
-
-    function updateImages() {
-      indices.forEach((idx, i) => {
-        document.getElementById(`img${i}`).style.backgroundImage = `url(${images[i][idx]})`;
-      });
-    }
-
-    function nextImage(i) {
-      indices[i] = (indices[i] + 1) % images[i].length;
-      updateImages();
-    }
-
-    function prevImage(i) {
-      indices[i] = (indices[i] - 1 + images[i].length) % images[i].length;
-      updateImages();
-    }
-
-    updateImages();
-
-    // Countdown
-    const target = new Date('January 29, 2026 23:59:00').getTime();
-    const countdownEl = document.getElementById('countdown');
-
-    setInterval(() => {
-      const now = new Date().getTime();
-      const diff = target - now;
-      if (diff <= 0) {
-        countdownEl.textContent = 'It\'s your birthday! 🎉';
-        return;
-      }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
-      countdownEl.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
-    }, 1000);
-  </script>
 </body>
 </html>
+
